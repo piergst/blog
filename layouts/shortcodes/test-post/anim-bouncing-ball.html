@@ -1,0 +1,17 @@
+<div id="bouncing-ball-{{ .Ordinal }}" style="width: 400px; height: 200px; border: 1px solid #ccc; position: relative;">
+  <div class="ball" style="width: 30px; height: 30px; background: red; border-radius: 50%; position: absolute;"></div>
+</div>
+<script>
+(function() {
+  const container = document.getElementById('bouncing-ball-{{ .Ordinal }}');
+  const ball = container.querySelector('.ball');
+  let x = 0, vx = 2;
+  function tick() {
+    x += vx;
+    if (x > 370 || x < 0) vx = -vx;
+    ball.style.left = x + 'px';
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+</script>

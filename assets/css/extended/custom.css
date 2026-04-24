@@ -1,0 +1,127 @@
+/* Any file under assets/css/extended/ is loaded by PaperMod AFTER the
+   theme's own CSS, so our rules win at equal specificity. */
+
+
+/* ============================================================
+   Fonts
+   ------------------------------------------------------------
+   Google Fonts via @import — simple, but blocks render until loaded.
+   For better perf, move to a <link> tag in layouts/partials/extend_head.html.
+   display=swap shows fallback fonts immediately, swaps in when ready.
+   ============================================================ */
+
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap'); */
+
+/* body {
+    font-family: 'Source Code Pro', ui-monospace, Menlo, Consolas, monospace;
+} */
+
+/* h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto Mono', ui-monospace, Menlo, Consolas, monospace;
+} */
+
+
+/* ============================================================
+   Layout
+   ============================================================ */
+
+/* Content column — PaperMod defaults to 720px (theme-vars.css), which is
+   tight for articles with many code blocks. */
+:root {
+    --main-width: 1000px;
+}
+
+
+/* ============================================================
+   Code blocks
+   ------------------------------------------------------------
+   Same approach as PaperMod's .toc: background directly on the bordered
+   element, inner elements transparent — no nested bg/radius mismatch,
+   no need for overflow clipping.
+   Fixed rgba (not currentColor-derived) keeps borders consistent between
+   highlighted and plain blocks (otherwise Chroma's inline color=... on
+   highlighted <pre> makes their border brighter).
+   ============================================================ */
+
+/* Plain <pre> (no .highlight wrapper): bg + border + radius all on the same element. */
+pre {
+    background: var(--code-block-bg);
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: var(--radius);
+}
+
+/* Highlighted blocks: .highlight already has bg + radius from PaperMod — just add the border.
+   Inner <pre> and <code> must be transparent so a single bg fills the rounded container. */
+.highlight {
+    border: 1px solid rgba(128, 128, 128, 0.35);
+}
+
+.highlight pre {
+    /* !important needed to override Chroma's inline style="background-color:#..." */
+    background: transparent !important;
+    border: none;
+}
+
+pre code {
+    background: transparent !important;
+}
+
+
+/* ============================================================
+   Language badge (from Chroma's data-lang attribute)
+   ============================================================ */
+
+/* Padding goes INSIDE <code> (same bg as the block) so no color seam. */
+.highlight pre code[data-lang]:not([data-lang=""]) {
+    padding-top: 2rem;
+}
+
+.highlight pre > code[data-lang]:not([data-lang=""])::before {
+    content: attr(data-lang);
+    position: absolute;
+    top: 8px;
+    left: 14px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+/* ============================================================
+   Copy button
+   ------------------------------------------------------------
+   Injected by layouts/partials/extend_footer.html.
+   PaperMod's base CSS handles hover visibility (display: none by default,
+   display: block on pre:hover). We only add positioning and click feedback.
+   ============================================================ */
+
+.copy-code {
+    top: 10px;                   /* default: top-right corner (multi-line blocks) */
+    right: 10px;
+    cursor: pointer;
+    padding: 5px 6px;
+    line-height: 0;              /* strips the baseline gap around the inline SVG */
+    transition: transform 0.12s ease;
+}
+
+.copy-code svg {
+    display: block;
+}
+
+/* Single-line variant — class added by extend_footer.html when the block has no newline. */
+.copy-code--inline {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Shrink to 88% during press — tactile feedback, adjust between 0.85-0.95 to taste. */
+.copy-code:active {
+    transform: scale(0.88);
+}
+
+/* Single-line variant keeps its translateY when pressed — otherwise the button jumps to the top. */
+.copy-code--inline:active {
+    transform: translateY(-50%) scale(0.88);
+}

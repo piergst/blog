@@ -1,0 +1,63 @@
+{{/*
+  extend_footer.html
+  PaperMod extension hook — injected at the end of <body> via
+  themes/PaperMod/layouts/partials/footer.html.
+
+  We replace PaperMod's built-in copy button (disabled via
+  ShowCodeCopyButtons = false in hugo.toml) with a custom SVG version.
+*/}}
+
+{{- /* Only inject on article pages — code blocks don't appear on list/section pages. */ -}}
+{{- if (eq .Kind "page") }}
+<script>
+(function () {
+    // Feather Icons inlined. stroke="currentColor" lets them adapt to
+    // PaperMod's light/dark theme automatically.
+    const COPY_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+    const CHECK_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+    const COPIED_FEEDBACK_MS = 2000;
+
+    document.querySelectorAll('pre > code').forEach((code) => {
+        const pre = code.parentNode;
+        const btn = document.createElement('button');
+        btn.className = 'copy-code';
+
+        // Single-line blocks → center the button vertically on the text.
+        // Multi-line blocks → keep it pinned to the top-right corner.
+        // Exception: when there's a language badge, extra padding-top makes even
+        // single-line blocks tall enough that the top-right position looks right.
+        const isSingleLine = !code.textContent.trim().includes('\n');
+        const hasLangBadge = !!code.dataset.lang;
+        if (isSingleLine && !hasLangBadge) {
+            btn.classList.add('copy-code--inline');
+        }
+
+        btn.setAttribute('aria-label', 'Copy code to clipboard');
+        btn.setAttribute('type', 'button');
+        btn.innerHTML = COPY_SVG;
+
+        btn.addEventListener('click', async () => {
+            // navigator.clipboard requires HTTPS or localhost.
+            // Fails silently in insecure contexts.
+            try {
+                await navigator.clipboard.writeText(code.innerText);
+            } catch (err) {
+                console.error('Copy failed:', err);
+                return;
+            }
+
+            btn.innerHTML = CHECK_SVG;
+            btn.classList.add('copied');
+
+            setTimeout(() => {
+                btn.innerHTML = COPY_SVG;
+                btn.classList.remove('copied');
+            }, COPIED_FEEDBACK_MS);
+        });
+
+        pre.appendChild(btn);
+    });
+})();
+</script>
+{{- end }}

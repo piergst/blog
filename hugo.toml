@@ -1,0 +1,72 @@
+# Root site config. Language-specific settings live under [languages.*].
+baseURL = 'https://example.org/'
+title = ''
+theme = "PaperMod"
+
+# Default language = FR → French URLs have no /fr/ prefix (only /en/ is prefixed).
+defaultContentLanguage = "fr"
+defaultContentLanguageInSubdir = false
+
+
+[params]
+  # Show languageName (emoji flag) instead of fallback "Fr"/"En" text in the switcher.
+  displayFullLangName = true
+  hideFooter = true
+  # Copy button handled in layouts/partials/extend_footer.html — disable built-in to avoid duplicates.
+  ShowCodeCopyButtons = false
+  # Estimated reading time in article meta (both on list and single view).
+  ShowReadingTime = true
+
+
+# Syntax highlighting — pick any style from https://xyproto.github.io/splash/docs/all.html
+# Common picks: monokai (default), dracula, nord, one-dark, catppuccin-mocha, github-dark.
+[markup]
+  [markup.highlight]
+    style = "github-dark"
+
+
+[languages]
+  [languages.fr]
+    languageName = "fr"
+    languageAltTitle = "Français"
+    languageCode = "fr-FR"
+    weight = 1                    # language order (lowest = first/default)
+    title = ""
+
+    # Main menu — entries ordered by weight ascending.
+    [[languages.fr.menu.main]]
+      name = "Accueil"
+      url = "/"
+      weight = 1
+
+    [[languages.fr.menu.main]]
+      name = "Articles"
+      url = "/posts/"
+      weight = 5
+
+    [[languages.fr.menu.main]]
+      name = "A Propos"
+      url = "/about/"
+      weight = 10
+
+  [languages.en]
+    languageName = "en"
+    languageAltTitle = "English"
+    languageCode = "en-US"
+    weight = 2
+    title = ""
+
+    [[languages.en.menu.main]]
+      name = "Home"
+      url = "/"
+      weight = 1
+
+    [[languages.en.menu.main]]
+      name = "Posts"
+      url = "/posts/"
+      weight = 5
+
+    [[languages.en.menu.main]]
+      name = "About"
+      url = "/about/"
+      weight = 10
