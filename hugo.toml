@@ -1,5 +1,5 @@
 # Root site config. Language-specific settings live under [languages.*].
-baseURL = 'https://example.org/'
+baseURL = 'https://piergst.github.io/blog/'
 title = ''
 theme = "PaperMod"
 
