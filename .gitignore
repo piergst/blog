@@ -3,6 +3,7 @@ public/
 resources/
 .hugo_build.lock
 hugo_stats.json
+temp/
 
 # OS
 .DS_Store
