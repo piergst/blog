@@ -1,0 +1,41 @@
+<svg width="223px" height="298px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <style>
+        /* `color` drives currentColor on the dashed construction strokes;
+           `--logo-bg` matches the page background so the silhouette merges with it. */
+        svg { color: #1e1e1e; --logo-bg: #ffffff; }
+        @media (prefers-color-scheme: dark) {
+            svg { color: #dadada; --logo-bg: #0d1117; }
+        }
+    </style>
+    <g transform="matrix(0.610011,0,0,1,-670.631188,-2125.372905)">
+        <clipPath id="_clip1">
+            <rect x="1099.375" y="2125.373" width="364.212" height="297.684"/>
+        </clipPath>
+        <g clip-path="url(#_clip1)">
+            <g>
+                <clipPath id="_clip2">
+                    <rect x="1099.375" y="2125.373" width="364.212" height="297.684"/>
+                </clipPath>
+                <g clip-path="url(#_clip2)">
+                    <g transform="matrix(1.639314,0,0,1,-2065.647661,-1167.14678)">
+                    </g>
+                    <g transform="matrix(-1.639314,-0,0,-1,4599.990493,5980.526689)">
+                        <path d="M2109.688,3610.394L2109.688,3744.916C2109.688,3790.071 2073.028,3826.732 2027.872,3826.732C1982.717,3826.732 1946.056,3790.071 1946.056,3744.916L1946.056,3610.394C1946.056,3596.871 1957.036,3585.892 1970.559,3585.892C1984.083,3585.892 1995.062,3596.871 1995.062,3610.394L1995.062,3744.916C1995.062,3763.024 2009.764,3777.726 2027.872,3777.726C2045.981,3777.726 2060.682,3763.024 2060.682,3744.916L2060.682,3610.394C2060.682,3596.871 2071.662,3585.892 2085.185,3585.892C2098.709,3585.892 2109.688,3596.871 2109.688,3610.394Z" style="fill:var(--logo-bg);stroke:rgb(240,113,120);stroke-width:2px;"/>
+                    </g>
+                    <g transform="matrix(1.634569,0,0,0.997105,1100.273933,2126.076858)">
+                        <path d="M189.358,110.091C189.358,110.14 189.358,110.189 189.358,110.238C189.358,155.524 152.591,192.291 107.305,192.291C62.018,192.291 25.251,155.524 25.251,110.238C25.251,110.189 25.251,110.14 25.251,110.091L189.358,110.091Z" style="fill:none;stroke:currentColor;stroke-width:1px;stroke-dasharray:4.012,4.012,0,0,0,0;"/>
+                    </g>
+                    <g transform="matrix(-1.639314,-0,0,-1,4611.205463,5740.524348)">
+                        <path d="M2001.903,3504.913C2001.903,3486.805 2016.605,3472.103 2034.714,3472.103C2052.822,3472.103 2067.524,3486.805 2067.524,3504.913" style="fill:none;stroke:currentColor;stroke-width:0.83px;stroke-dasharray:3.333,3.333,0,0,0,0;"/>
+                    </g>
+                    <g transform="matrix(-1.639314,-0,0,-1,5061.001873,5718.045933)">
+                        <path d="M2276.284,3347.914C2276.284,3361.437 2265.305,3372.416 2251.781,3372.416C2238.258,3372.416 2227.278,3361.437 2227.278,3347.914" style="fill:none;stroke:currentColor;stroke-width:1px;stroke-dasharray:4,4,0,0,0,0;"/>
+                    </g>
+                    <g transform="matrix(-1.639314,-0,0,-1,4873.093904,5718.045933)">
+                        <path d="M2276.284,3347.914C2276.284,3361.437 2265.305,3372.416 2251.781,3372.416C2238.258,3372.416 2227.278,3361.437 2227.278,3347.914" style="fill:none;stroke:currentColor;stroke-width:1px;stroke-dasharray:4,4,0,0,0,0;"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

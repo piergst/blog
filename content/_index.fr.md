@@ -2,10 +2,12 @@
 title = "Accueil"
 +++
 
-Bienvenue.
+Bienvenue
 
-Ce blog regroupe mes **writeups**, **notes de pentest** et expérimentations techniques autour de la sécurité offensive. Les articles sont disponibles en français ou en anglais selon le sujet.
+Ce blog regroupe des articles autour de la sécurité offensive et du développement. Les articles sont disponibles en français et en anglais.
 
-Vous trouverez les articles récents ci-dessous.
+***Handcrafted articles only. No gen AI.***
 
---- 
+---
+
+### Articles récents

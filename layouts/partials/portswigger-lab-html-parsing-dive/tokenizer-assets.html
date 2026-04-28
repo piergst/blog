@@ -1,0 +1,8 @@
+{{- with resources.Get "portswigger-lab-html-parsing-dive/tokenizer-viz.css" -}}
+  {{- $css := . | minify | fingerprint -}}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+{{- end }}
+{{- with resources.Get "portswigger-lab-html-parsing-dive/tokenizer-viz.js" -}}
+  {{- $js := . | minify | fingerprint -}}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{- end }}

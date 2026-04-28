@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170.61673 170.61673">
+    <!-- Favicon variant of header-logo.svg: same two concentric rings, but
+         stroke-width doubled (6.61458 -> 13.22916) so the rings stay readable
+         at 16/32 px. Light/dark adaptation via the same @media trick. -->
+    <style>
+        svg { --logo-bg: #ffffff; }
+        @media (prefers-color-scheme: dark) { svg { --logo-bg: #0d1117; } }
+    </style>
+    <g transform="translate(-19.69164,-63.19164)">
+        <circle cx="105" cy="148.5" r="82.001068"
+                style="fill:var(--logo-bg);stroke:#f07178;stroke-width:13.22916;"/>
+        <circle cx="105" cy="148.5" r="33.504696"
+                style="fill:var(--logo-bg);stroke:#f07178;stroke-width:13.22916;"/>
+    </g>
+</svg>

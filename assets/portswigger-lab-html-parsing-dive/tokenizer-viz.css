@@ -1,0 +1,186 @@
+/* =====================================================================
+   HTML5 Tokenizer visualiser.
+   Scoped under .tokenizer-viz. Anchored to PaperMod vars so the widget
+   follows the blog's code-block look: same --code-block-bg, same --radius,
+   same 1px rgba(128,128,128,0.35) border convention as pre / .highlight.
+   ===================================================================== */
+
+.tokenizer-viz {
+  /* Syntactic roles -- tuned for legibility over --code-block-bg (always dark). */
+  --tkv-c-tag: #60a5fa;
+  --tkv-c-attrname: #34d399;
+  --tkv-c-attrval: #fb923c;
+  --tkv-c-data: #94a3b8;
+  --tkv-c-delim: #f472b6;
+  --tkv-c-equals: #a78bfa;
+  --tkv-c-highlight: #fbbf24;
+  --tkv-c-error: #ef4444;
+  --tkv-c-accent: #38bdf8;
+
+  /* Internal surfaces layered on top of --code-block-bg via subtle white overlays.
+     Using overlays (not opaque colors) keeps the widget coherent if the theme's
+     code-block-bg ever changes. */
+  --tkv-surface: rgba(255, 255, 255, 0.04);
+  --tkv-surface-strong: rgba(255, 255, 255, 0.08);
+  --tkv-hairline: rgba(128, 128, 128, 0.25);
+
+  --tkv-text: #d8d8d9;
+  --tkv-text-dim: #8a8d93;
+
+  background: var(--code-block-bg);
+  color: var(--tkv-text);
+  font-family: inherit;
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 1.5em 0;
+}
+
+.tokenizer-viz *,
+.tokenizer-viz *::before,
+.tokenizer-viz *::after { box-sizing: border-box; }
+
+/* Monospace blocks inherit the same stack PaperMod uses for code. */
+.tokenizer-viz .col-desc,
+.tokenizer-viz .char-grid,
+.tokenizer-viz .state-name,
+.tokenizer-viz .transition-reason,
+.tokenizer-viz .parse-error,
+.tokenizer-viz .btn,
+.tokenizer-viz .speed-control,
+.tokenizer-viz .step-slider-row,
+.tokenizer-viz .token-entry {
+  font-family: ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+.tokenizer-viz .col-header {
+  padding: 10px 14px; background: var(--tkv-surface);
+  border-bottom: 1px solid var(--tkv-hairline);
+  font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
+}
+.tokenizer-viz .col-header .tag {
+  font-size: 10px; padding: 2px 8px; border-radius: 99px;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.tokenizer-viz .col-header .tag.normal    { background: rgba(52,211,153,0.15); color: #34d399; }
+.tokenizer-viz .col-header .tag.injection { background: rgba(239,68,68,0.15);  color: #ef4444; }
+.tokenizer-viz .col-header .tag.dangling  { background: rgba(251,191,36,0.15); color: #fbbf24; }
+.tokenizer-viz .col-header .tag.closed    { background: rgba(96,165,250,0.15); color: #60a5fa; }
+.tokenizer-viz .col-header .tag.exploit   { background: rgba(244,114,182,0.15); color: #f472b6; }
+
+.tokenizer-viz .col-desc {
+  padding: 8px 14px; font-size: 11px; color: var(--tkv-text-dim);
+  border-bottom: 1px solid var(--tkv-hairline);
+  line-height: 1.5;
+}
+
+.tokenizer-viz .col-controls {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; padding: 10px 14px;
+  border-bottom: 1px solid var(--tkv-hairline); flex-wrap: wrap;
+}
+
+.tokenizer-viz .step-slider-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; padding: 8px 14px;
+  border-bottom: 1px solid var(--tkv-hairline);
+}
+.tokenizer-viz .step-slider-row input[type=range] {
+  flex: 1; max-width: 500px; accent-color: var(--tkv-c-accent);
+}
+.tokenizer-viz .step-slider-row .step-label {
+  font-size: 11px; color: var(--tkv-text-dim);
+  min-width: 80px; text-align: center;
+}
+
+.tokenizer-viz .btn {
+  font-size: 12px; font-weight: 600;
+  padding: 6px 14px; border: 1px solid var(--tkv-hairline);
+  border-radius: 5px; background: var(--tkv-surface);
+  color: var(--tkv-text); cursor: pointer; transition: all 0.15s;
+  user-select: none;
+}
+.tokenizer-viz .btn:hover { border-color: var(--tkv-c-accent); color: var(--tkv-c-accent); }
+.tokenizer-viz .btn.active { background: var(--tkv-c-accent); color: var(--code-block-bg); border-color: var(--tkv-c-accent); }
+.tokenizer-viz .btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+
+.tokenizer-viz .speed-control {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--tkv-text-dim);
+}
+.tokenizer-viz .speed-control input[type=range] { width: 70px; accent-color: var(--tkv-c-accent); }
+
+.tokenizer-viz .source-area {
+  padding: 12px 14px; border-bottom: 1px solid var(--tkv-hairline);
+  min-height: 50px; max-height: 150px; overflow: auto;
+}
+.tokenizer-viz .char-grid {
+  display: flex; flex-wrap: wrap; gap: 1px;
+  font-size: 13px; line-height: 1;
+}
+.tokenizer-viz .char-cell {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 12px; height: 24px; padding: 0 1px;
+  border-radius: 3px; transition: all 0.1s; position: relative;
+}
+.tokenizer-viz .char-cell.pending { color: var(--tkv-text-dim); }
+.tokenizer-viz .char-cell.current {
+  background: var(--tkv-c-highlight); color: var(--code-block-bg);
+  font-weight: 700; box-shadow: 0 0 10px rgba(251,191,36,0.4);
+}
+.tokenizer-viz .char-cell.role-tag      { color: var(--tkv-c-tag); }
+.tokenizer-viz .char-cell.role-attrname { color: var(--tkv-c-attrname); }
+.tokenizer-viz .char-cell.role-attrval  { color: var(--tkv-c-attrval); }
+.tokenizer-viz .char-cell.role-data     { color: var(--tkv-c-data); }
+.tokenizer-viz .char-cell.role-delim    { color: var(--tkv-c-delim); }
+.tokenizer-viz .char-cell.role-equals   { color: var(--tkv-c-equals); }
+.tokenizer-viz .char-cell.role-error    { color: var(--tkv-c-error); text-decoration: underline wavy var(--tkv-c-error); }
+.tokenizer-viz .char-cell.struck        { text-decoration: line-through; opacity: 0.5; }
+
+.tokenizer-viz .state-display {
+  padding: 14px; border-bottom: 1px solid var(--tkv-hairline); text-align: center;
+}
+.tokenizer-viz .state-display h3 {
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--tkv-text-dim); margin: 0 0 8px;
+}
+.tokenizer-viz .state-name {
+  font-size: 15px; font-weight: 700; color: var(--tkv-c-accent);
+  padding: 8px 16px; background: rgba(56,189,248,0.12);
+  border: 1px solid rgba(56,189,248,0.25); border-radius: var(--radius);
+  display: inline-block;
+}
+.tokenizer-viz .transition-reason {
+  font-size: 12px; color: var(--tkv-c-highlight); margin-top: 8px;
+  min-height: 18px;
+}
+.tokenizer-viz .parse-error {
+  margin-top: 8px; padding: 6px 12px;
+  background: rgba(239,68,68,0.12);
+  border: 1px solid rgba(239,68,68,0.3); border-radius: 6px;
+  color: var(--tkv-c-error); font-size: 12px; font-weight: 600;
+  display: none;
+}
+.tokenizer-viz .parse-error.visible { display: inline-block; }
+
+.tokenizer-viz .tokens-area { padding: 12px 14px; max-height: 300px; overflow-y: auto; }
+.tokenizer-viz .tokens-area h3 {
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--tkv-text-dim); margin: 0 0 8px;
+}
+.tokenizer-viz .token-entry {
+  font-size: 12px; padding: 6px 10px; margin-bottom: 4px;
+  border-radius: 5px; background: var(--tkv-surface);
+  border-left: 3px solid var(--tkv-hairline);
+  word-break: break-all;
+}
+.tokenizer-viz .token-entry.start-tag { border-left-color: var(--tkv-c-tag); }
+.tokenizer-viz .token-entry.end-tag   { border-left-color: var(--tkv-c-delim); }
+.tokenizer-viz .token-entry.character { border-left-color: var(--tkv-c-data); }
+.tokenizer-viz .token-type          { font-weight: 700; }
+.tokenizer-viz .token-type.t-start  { color: var(--tkv-c-tag); }
+.tokenizer-viz .token-type.t-end    { color: var(--tkv-c-delim); }
+.tokenizer-viz .token-type.t-char   { color: var(--tkv-c-data); }
+.tokenizer-viz .attr-display        { color: var(--tkv-c-attrname); }
+.tokenizer-viz .attr-val-display    { color: var(--tkv-c-attrval); }

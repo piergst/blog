@@ -1,18 +1,20 @@
 +++
-title = 'À propos'
+title = ''
+hideMeta = true
 +++
 
-Ce blog regroupe mes notes, writeups et expérimentations autour de la sécurité offensive et du développement.
+## Pierre Giusti
 
-## Ce qu'on y trouve
+Actuellement à fond offsec et bug bounty. Avant ça, plus de 10 ans de dev, côté industrie d'abord, embarqué et machines à commande numérique. Puis j'ai bifurqué vers de l'applicatif desktop et web, avec pas mal de devops au passage. J'aime les sujets tech, chercher, creuser, apprendre, développer mes tools.
 
-- Writeups de CTF et de machines HackTheBox
-- Notes de pentest web et Active Directory
-- Cheatsheets et méthodologies
-- Expérimentations techniques au fil de l'eau
+J'ai eu une autre vie professionnelle aussi : charpente bois, charpente navale, maisons en rondins au Canada... Pas mal d'années à fabriquer des trucs qui tiennent debout, ou qui flottent. Ça m'a amené à concevoir une machine numérique pour la charpente. J'ai dessiné et construit les deux premiers prototypes seul, dans un atelier ; six ans plus tard l'entreprise sortait cent machines par an.
 
-Les articles sont disponibles en français et en anglais selon le sujet.
+Entre deux, j'ai traversé l'Atlantique à la voile.
 
-## Contact
+Bref, quand un projet m'embarque j'ai du mal à le lâcher :)
 
-N'hésitez pas à me contacter pour toute question ou remarque sur un article.
+## Liens
+
+- GitHub : [github.com/piergst](https://github.com/piergst)
+- Linkedin: [linkedin.com/in/pierre-giusti](https://www.linkedin.com/in/pierre-giusti-8aaa1b2b6)
+- Email : [piergst@protonmail.com](mailto:piergst@protonmail.com)

@@ -2,10 +2,12 @@
 title = "Home"
 +++
 
-Welcome.
+Welcome
 
-This blog gathers my **writeups**, **pentest notes**, and technical experiments around offensive security. Articles are written in French or English depending on the topic.
+This blog gathers articles around offensive security and development. Articles are available in French and English.
 
-Recent posts are listed below.
+***Handcrafted articles only. No gen AI.***
 
 ---
+
+### Recent articles

@@ -1,0 +1,6 @@
+{{- $example := .Get "example" -}}
+{{- if not (.Page.Store.Get "tokenizer-viz-loaded") -}}
+  {{ partial "portswigger-lab-html-parsing-dive/tokenizer-assets.html" . }}
+  {{- .Page.Store.Set "tokenizer-viz-loaded" true -}}
+{{- end -}}
+<div class="tokenizer-viz" id="tkv-{{ .Ordinal }}" data-example="{{ $example }}"></div>

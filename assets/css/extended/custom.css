@@ -28,9 +28,70 @@
 /* Content column — PaperMod defaults to 720px (theme-vars.css), which is
    tight for articles with many code blocks. */
 :root {
-    --main-width: 1000px;
+    --main-width: 900px;
+    --accent: #F07178;
 }
 
+/* Darker dark-mode background — matches GitHub Dark, which the chroma
+   `github-dark` syntax theme is paired with. */
+:root[data-theme="dark"] {
+    --theme: #0d1117;
+}
+
+/* ============================================================
+   Accent (#F07178) — a few subtle brand-colour touches.
+   ============================================================ */
+
+/* Active nav item — PaperMod draws a 2px underline in currentColor; recolour it.
+   !important to win even if the cascade gets noisy. */
+.menu .active {
+    border-bottom-color: var(--accent) !important;
+}
+
+/* Selected text picks up the accent — a small but visible signature. */
+::selection {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* Blockquote left rule — replaces PaperMod's neutral border with the accent. */
+blockquote {
+    border-left-color: var(--accent) !important;
+}
+
+/* Content links — keep PaperMod's text colour, but the underline picks up
+   the accent. text-decoration-color works independently of the text colour. */
+.md-content a {
+    text-decoration-color: var(--accent);
+}
+
+/* Sticky site header — stays visible on scroll. var(--theme) is opaque so the
+   content scrolling under is masked cleanly without a translucent overlay. */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--theme);
+}
+
+/* Nav layout: switches (theme + lang) far left, page menu, then the logo
+   image far right. The .logo wrapper groups title-link + switches in source,
+   so display:contents flattens it into the .header-nav flex container; we
+   then place each child individually with `order`. margin-right:auto on the
+   switches pushes everything else to the right, keeping menu and logo
+   together. PaperMod's flex-wrap on the nav still handles narrow viewports. */
+.logo { display: contents; }
+.logo-switches {
+    order: 1;
+    margin-right: auto;
+    margin-block: auto;
+}
+.menu { order: 2; }
+.logo > a {
+    order: 3;
+    font-size: 0;             /* hide the title text, only the img remains */
+    margin-block: auto;
+}
 
 /* ============================================================
    Code blocks

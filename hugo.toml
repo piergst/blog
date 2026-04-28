@@ -1,10 +1,9 @@
 # Root site config. Language-specific settings live under [languages.*].
 baseURL = 'https://piergst.github.io/'
-title = ''
 theme = "PaperMod"
 
-# Default language = FR → French URLs have no /fr/ prefix (only /en/ is prefixed).
-defaultContentLanguage = "fr"
+# Default language = EN → English URLs have no /en/ prefix (only /fr/ is prefixed).
+defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 
 
@@ -16,6 +15,19 @@ defaultContentLanguageInSubdir = false
   ShowCodeCopyButtons = false
   # Estimated reading time in article meta (both on list and single view).
   ShowReadingTime = true
+
+  # Logo in the site header — two concentric rings, accent stroke.
+  [params.label]
+    icon = "/header-logo.svg"
+    iconHeight = 32
+
+  # Favicons. SVG covers evergreen browsers; PNG fallbacks for iOS Safari and
+  # the home-screen icon (which doesn't honour the SVG media query).
+  # favicon.svg = same shape as header-logo.svg with thicker strokes for 16/32 px.
+  [params.assets]
+    favicon = "/favicon.svg"
+    favicon32x32 = "/favicon-32x32.png"
+    apple_touch_icon = "/apple-touch-icon.png"
 
 
 # Syntax highlighting — pick any style from https://xyproto.github.io/splash/docs/all.html
@@ -30,8 +42,8 @@ defaultContentLanguageInSubdir = false
     languageName = "fr"
     languageAltTitle = "Français"
     languageCode = "fr-FR"
-    weight = 1                    # language order (lowest = first/default)
-    title = ""
+    weight = 2                    # language order (lowest = first/default)
+    title = "Pierre Giusti"       # gates PaperMod's logo block + drives browser tab title
 
     # Main menu — entries ordered by weight ascending.
     [[languages.fr.menu.main]]
@@ -45,7 +57,7 @@ defaultContentLanguageInSubdir = false
       weight = 5
 
     [[languages.fr.menu.main]]
-      name = "A Propos"
+      name = "À Propos"
       url = "/about/"
       weight = 10
 
@@ -53,8 +65,8 @@ defaultContentLanguageInSubdir = false
     languageName = "en"
     languageAltTitle = "English"
     languageCode = "en-US"
-    weight = 2
-    title = ""
+    weight = 1
+    title = "Pierre Giusti"
 
     [[languages.en.menu.main]]
       name = "Home"

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="170.61673mm"
+   height="170.61673mm"
+   viewBox="0 0 170.61673 170.61673"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   sodipodi:docname="header-logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="0.99785714"
+     inkscape:cx="494.55977"
+     inkscape:cy="247.53042"
+     inkscape:window-width="1900"
+     inkscape:window-height="1003"
+     inkscape:window-x="1930"
+     inkscape:window-y="67"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <style>
+    /* `--logo-bg` matches the page background so the inside of each ring
+       merges with it. Flips on OS dark-mode preference, same approach as
+       logo.svg / favicon.svg. */
+    svg { --logo-bg: #ffffff; }
+    @media (prefers-color-scheme: dark) { svg { --logo-bg: #0d1117; } }
+  </style>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-19.69164,-63.19164)">
+    <circle
+       style="fill:var(--logo-bg);fill-opacity:1;stroke:#f07178;stroke-width:6.61458;stroke-dasharray:none;stroke-opacity:1"
+       id="path1"
+       cx="105"
+       cy="148.5"
+       r="82.001068" />
+    <circle
+       style="fill:var(--logo-bg);fill-opacity:1;stroke:#f07178;stroke-width:6.61458;stroke-dasharray:none;stroke-opacity:1"
+       id="path2"
+       cx="105"
+       cy="148.5"
+       r="33.504696" />
+  </g>
+</svg>
