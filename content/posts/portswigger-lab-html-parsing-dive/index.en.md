@@ -1,7 +1,7 @@
 +++
 date = '2026-04-24T11:11:59+02:00'
 title = 'Diving into HTML parsing through a PortSwigger lab'
-summary = "A PortSwigger lab on dangling markup injection got me wondering what actually happens between the raw HTML a server sends and what a browser displays. This article traces that journey, from a /login that vanished from the DOM to the HTML tokenizer state machine, tree construction, and DOMPurify sanitization. Less of a write-up, more of an exploration of HTML parsing mechanics."
+summary = "The HTML you see in devtools is not the HTML the server sent... A PortSwigger lab on dangling markup injection got me wondering what actually happens between the raw HTML a server sends and what a browser displays. This article traces that journey, from a /login that vanished from the DOM to the HTML tokenizer state machine, tree construction, and DOMPurify sanitization. Less of a write-up, more of an exploration of HTML parsing mechanics."
 draft = false
 +++
 
@@ -9,9 +9,9 @@ draft = false
 > **TL;DR** - A PortSwigger lab on dangling markup injection got me wondering what actually happens between the raw HTML a server sends and what a browser displays. This article traces that journey, from a /login that vanished from the DOM to the HTML tokenizer state machine, tree construction, and DOMPurify sanitization. Less of a write-up, more of an exploration of HTML parsing mechanics.
 --- 
 
-I recently worked on a [PortSwigger lab](https://portswigger.net/web-security/host-header/exploiting/password-reset-poisoning/lab-host-header-password-reset-poisoning-via-dangling-markup) about *Host Header injection* attacks. I quickly found the entry point, but after dozens of tested payloads I still couldn't crack the thing. I didn't understand the underlying mechanics. I ended up looking at the solution, and it worked perfectly fine...
+I recently worked on a [PortSwigger lab](https://portswigger.net/web-security/host-header/exploiting/password-reset-poisoning/lab-host-header-password-reset-poisoning-via-dangling-markup) about *Host Header injection* attacks. I quickly found the entry point, but after dozens of tested payloads I still couldn't crack the thing. I didn't understand the underlying mechanics. I ended up looking at the solution, and it worked perfectly fine, but...
 
-***But I didn't understand why.***
+***I didn't understand why.***
 
 This is something that's missing from a lot of write-ups: the reasoning. Why this payload, this specific approach, what drives a particular decision at a given moment. Because at the end of the day, the solution alone is less interesting, the journey matters far more to truly understand what's going on.
 
@@ -249,8 +249,7 @@ div.innerHTML = '<a href="first"><a href="second">text</a>';
 div.innerHTML;
 // output -> '<a href="first"></a><a href="second">text</a>'
 ```
-
-***`click here` has become a clickable link controlled by our injection.***
+***Thanks to this process, our injection is clean and allows us to control the target of the `click here` link.***
 
 ### Link hit
 

@@ -1,7 +1,7 @@
 +++
 date = '2026-04-24T11:11:59+02:00'
 title = 'Diving into HTML parsing through a PortSwigger lab'
-summary = "Un lab PortSwigger sur le dangling markup injection m'a amené à me demander ce qui se passe réellement entre le HTML brut envoyé par un serveur et ce qu'un navigateur affiche. Cet article retrace ce cheminement, d'un /login disparu du DOM jusqu'à la machine à états du tokenizer HTML, la construction de l'arbre et la sanitization DOMPurify. Moins un write-up qu'une exploration des mécanismes du parsing HTML."
+summary = "Le HTML qu'on voit dans les devtools n'est pas le HTML que le serveur a envoyé... Un lab PortSwigger sur le dangling markup injection m'a amené à me demander ce qui se passe réellement entre le HTML brut envoyé par un serveur et ce qu'un navigateur affiche. Cet article retrace ce cheminement, d'un /login disparu du DOM jusqu'à la machine à états du tokenizer HTML, la construction de l'arbre et la sanitization DOMPurify. Moins un write-up qu'une exploration des mécanismes du parsing HTML."
 draft = false
 +++
 
@@ -9,9 +9,9 @@ draft = false
 > **TL;DR** - Un lab PortSwigger sur le dangling markup injection m'a amené à me demander ce qui se passe réellement entre le HTML brut envoyé par un serveur et ce qu'un navigateur affiche. Cet article retrace ce cheminement, d'un /login disparu du DOM jusqu'à la machine à états du tokenizer HTML, la construction de l'arbre et la sanitization DOMPurify. Moins un write-up qu'une exploration des mécanismes du parsing HTML
 --- 
 
-Récemment j'ai travaillé sur un [lab de PortSwigger](https://portswigger.net/web-security/host-header/exploiting/password-reset-poisoning/lab-host-header-password-reset-poisoning-via-dangling-markup) autour des attaques de type *Host Header injection*. J'ai rapidement trouvé le point d'entrée mais plusieurs dizaines de payloads testés ne m'ont pas permis de venir à bout du truc. Je ne comprenais pas la mécanique sous-jacente. J'ai fini par regarder la solution, elle marchait très bien... 
+Récemment j'ai travaillé sur un [lab de PortSwigger](https://portswigger.net/web-security/host-header/exploiting/password-reset-poisoning/lab-host-header-password-reset-poisoning-via-dangling-markup) autour des attaques de type *Host Header injection*. J'ai rapidement trouvé le point d'entrée mais plusieurs dizaines de payloads testés ne m'ont pas permis de venir à bout du truc. Je ne comprenais pas la mécanique sous-jacente. J'ai fini par regarder la solution, elle marchait très bien, mais... 
 
-***Mais je ne comprenais pas pourquoi.***
+***Je ne comprenais pas pourquoi.***
 
 C'est quelque chose qui manque dans beaucoup de write-ups : la démarche. Pourquoi ce payload, cette approche spécifiquement, qu'est-ce qui motive telle décision à tel moment. Parce qu'au final la solution seule a moins d'intérêt, le cheminement est beaucoup plus intéressant pour comprendre vraiment.
 
@@ -249,7 +249,7 @@ div.innerHTML;
 // output → '<a href="first"></a><a href="second">text</a>'
 ```
 
-***`click here` est devenu un lien cliquable contrôlé par notre injection.***
+***Grâce à ce mécanisme, notre injection est propre et nous permet de contrôler la cible du lien `click here`.***
 
 ### Link hit
 
